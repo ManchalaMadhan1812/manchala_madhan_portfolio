@@ -1,31 +1,34 @@
 /*==================================================
-        PORTFOLIO SCRIPT v2.0
-        Manchala Madhan
+    PORTFOLIO V4 - SCRIPT.JS
+    Part 1
 ==================================================*/
 
 "use strict";
 
 /*==================================================
-        LOADER
+    LOADER
 ==================================================*/
 
-window.addEventListener("load", () => {
+window.addEventListener("load", function () {
 
     const loader = document.getElementById("loader");
 
-    if (!loader) return;
+    if (loader) {
 
-    loader.style.transition = "opacity 0.5s ease";
-    loader.style.opacity = "0";
+        loader.style.opacity = "0";
 
-    setTimeout(() => {
-        loader.style.display = "none";
-    }, 500);
+        setTimeout(() => {
+
+            loader.style.display = "none";
+
+        }, 500);
+
+    }
 
 });
 
 /*==================================================
-        MOBILE MENU
+    MOBILE MENU
 ==================================================*/
 
 const menuBtn = document.querySelector(".menu-btn");
@@ -33,19 +36,19 @@ const navLinks = document.querySelector(".nav-links");
 
 if (menuBtn && navLinks) {
 
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", function () {
 
         navLinks.classList.toggle("active");
 
         if (navLinks.classList.contains("active")) {
 
             menuBtn.innerHTML =
-            '<i class="fa-solid fa-xmark"></i>';
+                '<i class="fa-solid fa-xmark"></i>';
 
         } else {
 
             menuBtn.innerHTML =
-            '<i class="fa-solid fa-bars"></i>';
+                '<i class="fa-solid fa-bars"></i>';
 
         }
 
@@ -53,25 +56,22 @@ if (menuBtn && navLinks) {
 
 }
 
-/*==================================================
-        CLOSE MENU
-==================================================*/
+/* Close Menu */
 
-document.querySelectorAll(".nav-links a")
-.forEach(link => {
+document.querySelectorAll(".nav-links a").forEach(link => {
 
     link.addEventListener("click", () => {
 
-        if(navLinks){
+        if (navLinks) {
 
             navLinks.classList.remove("active");
 
         }
 
-        if(menuBtn){
+        if (menuBtn) {
 
             menuBtn.innerHTML =
-            '<i class="fa-solid fa-bars"></i>';
+                '<i class="fa-solid fa-bars"></i>';
 
         }
 
@@ -80,516 +80,426 @@ document.querySelectorAll(".nav-links a")
 });
 
 /*==================================================
-        DARK MODE
+    DARK MODE
 ==================================================*/
 
-const themeBtn =
-document.getElementById("theme-btn");
+const themeBtn = document.getElementById("theme-btn");
 
-const savedTheme =
-localStorage.getItem("theme");
+if (themeBtn) {
 
-if(savedTheme==="light"){
+    const savedTheme = localStorage.getItem("theme");
 
-    document.body.classList.add("light-mode");
+    if (savedTheme === "light") {
 
-    if(themeBtn){
+        document.body.classList.add("light-mode");
 
         themeBtn.innerHTML =
-        '<i class="fa-solid fa-sun"></i>';
+            '<i class="fa-solid fa-sun"></i>';
 
     }
+
+    themeBtn.addEventListener("click", () => {
+
+        document.body.classList.toggle("light-mode");
+
+        if (document.body.classList.contains("light-mode")) {
+
+            localStorage.setItem("theme", "light");
+
+            themeBtn.innerHTML =
+                '<i class="fa-solid fa-sun"></i>';
+
+        } else {
+
+            localStorage.setItem("theme", "dark");
+
+            themeBtn.innerHTML =
+                '<i class="fa-solid fa-moon"></i>';
+
+        }
+
+    });
 
 }
 
-if(themeBtn){
+/*==================================================
+    TYPING EFFECT
+==================================================*/
 
-themeBtn.addEventListener("click",()=>{
+const typing = document.getElementById("typing");
 
-    document.body.classList.toggle("light-mode");
+if (typing) {
 
-    if(document.body.classList.contains("light-mode")){
+    const words = [
 
-        localStorage.setItem("theme","light");
+        "Software Developer",
 
-        themeBtn.innerHTML =
-        '<i class="fa-solid fa-sun"></i>';
+        "Java Developer",
+
+        "Frontend Developer",
+
+        "AI Enthusiast",
+
+        "React Learner"
+
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeWriter() {
+
+        const currentWord = words[wordIndex];
+
+        if (!deleting) {
+
+            typing.textContent =
+                currentWord.substring(0, charIndex);
+
+            charIndex++;
+
+            if (charIndex > currentWord.length) {
+
+                deleting = true;
+
+                setTimeout(typeWriter, 1500);
+
+                return;
+
+            }
+
+        } else {
+
+            typing.textContent =
+                currentWord.substring(0, charIndex);
+
+            charIndex--;
+
+            if (charIndex < 0) {
+
+                deleting = false;
+
+                wordIndex++;
+
+                if (wordIndex >= words.length) {
+
+                    wordIndex = 0;
+
+                }
+
+                charIndex = 0;
+
+            }
+
+        }
+
+        setTimeout(typeWriter, deleting ? 60 : 120);
 
     }
 
-    else{
+    typeWriter();
 
-        localStorage.setItem("theme","dark");
+}
 
-        themeBtn.innerHTML =
-        '<i class="fa-solid fa-moon"></i>';
+console.log("✅ Script Part 1 Loaded");
+/*==================================================
+    STICKY NAVBAR
+==================================================*/
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if (!header) return;
+
+    if (window.scrollY > 50) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
 
     }
 
 });
 
+/*==================================================
+    SCROLL PROGRESS BAR
+==================================================*/
+
+const progressBar = document.getElementById("progress-bar");
+
+window.addEventListener("scroll", () => {
+
+    if (!progressBar) return;
+
+    const scrollTop = document.documentElement.scrollTop;
+
+    const scrollHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const progress = (scrollTop / scrollHeight) * 100;
+
+    progressBar.style.width = progress + "%";
+
+});
+
+/*==================================================
+    BACK TO TOP BUTTON
+==================================================*/
+
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+
+    if (!backToTop) return;
+
+    if (window.scrollY > 400) {
+
+        backToTop.style.display = "flex";
+
+    } else {
+
+        backToTop.style.display = "none";
+
+    }
+
+});
+
+if (backToTop) {
+
+    backToTop.addEventListener("click", () => {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    });
+
 }
 
 /*==================================================
-        TYPING EFFECT
+    SMOOTH SCROLL
 ==================================================*/
 
-const typing =
-document.getElementById("typing");
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-if(typing){
+    anchor.addEventListener("click", function (e) {
 
-const words=[
+        const target =
+            document.querySelector(this.getAttribute("href"));
 
-"Software Developer",
+        if (!target) return;
 
-"Java Developer",
+        e.preventDefault();
 
-"Frontend Developer",
+        target.scrollIntoView({
 
-"Android Developer",
+            behavior: "smooth",
 
-"AI Enthusiast",
+            block: "start"
 
-"React Developer"
+        });
 
-];
+    });
 
-let wordIndex=0;
-let charIndex=0;
-let deleting=false;
+});
 
-function typingEffect(){
+/*==================================================
+    ACTIVE NAVIGATION
+==================================================*/
 
-const currentWord=words[wordIndex];
+const sections = document.querySelectorAll("section");
+const navItems = document.querySelectorAll(".nav-links a");
 
-if(!deleting){
+window.addEventListener("scroll", () => {
 
-typing.textContent=
-currentWord.substring(0,charIndex);
+    let currentSection = "";
 
-charIndex++;
+    sections.forEach(section => {
 
-if(charIndex>
+        const sectionTop = section.offsetTop - 120;
+        const sectionHeight = section.offsetHeight;
 
-currentWord.length){
+        if (
+            window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight
+        ) {
 
-deleting=true;
+            currentSection = section.getAttribute("id");
 
-setTimeout(typingEffect,1200);
+        }
 
-return;
+    });
 
-}
+    navItems.forEach(link => {
 
-}
+        link.classList.remove("active");
 
-else{
+        if (link.getAttribute("href") === "#" + currentSection) {
 
-typing.textContent=
-currentWord.substring(0,charIndex);
+            link.classList.add("active");
 
-charIndex--;
+        }
 
-if(charIndex<0){
+    });
 
-deleting=false;
+});
 
-wordIndex++;
+console.log("✅ Script Part 2 Loaded");
+/*==================================================
+    SCROLL REVEAL ANIMATION
+==================================================*/
 
-if(wordIndex>=words.length){
+const revealElements = document.querySelectorAll(
 
-wordIndex=0;
-
-}
-
-charIndex=0;
-
-}
-
-}
-
-setTimeout(
-
-typingEffect,
-
-deleting?60:120
+".fade-up, .project-card, .skill-card, .service-card, .stat-card, .timeline-item, .certificate-card, .contact-card"
 
 );
 
-}
+const revealObserver = new IntersectionObserver((entries) => {
 
-typingEffect();
+    entries.forEach((entry) => {
 
-}
+        if (entry.isIntersecting) {
 
-console.log("Portfolio Script Loaded Successfully");
-/*==================================================
-        STICKY NAVBAR
-==================================================*/
+            entry.target.classList.add("show");
 
-const header = document.getElementById("header");
-
-window.addEventListener("scroll", () => {
-
-    if (!header) return;
-
-    if (window.scrollY > 80) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
-});
-
-/*==================================================
-        SCROLL PROGRESS BAR
-==================================================*/
-
-const progressBar =
-document.getElementById("progress-bar");
-
-window.addEventListener("scroll", () => {
-
-    if (!progressBar) return;
-
-    const scrollTop =
-    document.documentElement.scrollTop;
-
-    const scrollHeight =
-    document.documentElement.scrollHeight -
-    document.documentElement.clientHeight;
-
-    const progress =
-    (scrollTop / scrollHeight) * 100;
-
-    progressBar.style.width =
-    progress + "%";
-
-});
-
-/*==================================================
-        BACK TO TOP BUTTON
-==================================================*/
-
-const backToTop =
-document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-
-    if (!backToTop) return;
-
-    if (window.scrollY > 400) {
-
-        backToTop.style.display = "flex";
-
-    } else {
-
-        backToTop.style.display = "none";
-
-    }
-
-});
-
-if(backToTop){
-
-backToTop.addEventListener("click", () => {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-});
-
-}
-
-/*==================================================
-        SMOOTH SCROLL
-==================================================*/
-
-document.querySelectorAll('a[href^="#"]')
-.forEach(anchor => {
-
-    anchor.addEventListener("click", function (e) {
-
-        const target =
-        document.querySelector(
-            this.getAttribute("href")
-        );
-
-        if (!target) return;
-
-        e.preventDefault();
-
-        target.scrollIntoView({
-
-            behavior: "smooth",
-
-            block: "start"
-
-        });
-
-    });
-
-});
-
-/*==================================================
-        ACTIVE NAVIGATION
-==================================================*/
-
-const sections =
-document.querySelectorAll("section");
-
-const navItems =
-document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const top =
-        section.offsetTop - 180;
-
-        if (window.scrollY >= top) {
-
-            current =
-            section.getAttribute("id");
+            revealObserver.unobserve(entry.target);
 
         }
 
     });
 
-    navItems.forEach(link => {
+}, {
 
-        link.classList.remove("active");
+    threshold: 0.15
 
-        if (
+});
 
-            link.getAttribute("href") ===
-            "#" + current
+revealElements.forEach((element) => {
 
-        ) {
+    element.classList.add("fade-up");
 
-            link.classList.add("active");
+    revealObserver.observe(element);
+
+});
+
+/*==================================================
+    ANIMATED COUNTERS
+==================================================*/
+
+const counters = document.querySelectorAll("[data-target]");
+
+const counterObserver = new IntersectionObserver((entries) => {
+
+    entries.forEach((entry) => {
+
+        if (!entry.isIntersecting) return;
+
+        const counter = entry.target;
+
+        const target = Number(counter.dataset.target);
+
+        let value = 0;
+
+        const increment = Math.ceil(target / 100);
+
+        function updateCounter() {
+
+            value += increment;
+
+            if (value >= target) {
+
+                counter.textContent = target;
+
+                return;
+
+            }
+
+            counter.textContent = value;
+
+            requestAnimationFrame(updateCounter);
 
         }
 
-    });
+        updateCounter();
 
-});
-/*==================================================
-        STICKY NAVBAR
-==================================================*/
-
-const header = document.getElementById("header");
-
-window.addEventListener("scroll", () => {
-
-    if (!header) return;
-
-    if (window.scrollY > 80) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
-});
-
-/*==================================================
-        SCROLL PROGRESS BAR
-==================================================*/
-
-const progressBar =
-document.getElementById("progress-bar");
-
-window.addEventListener("scroll", () => {
-
-    if (!progressBar) return;
-
-    const scrollTop =
-    document.documentElement.scrollTop;
-
-    const scrollHeight =
-    document.documentElement.scrollHeight -
-    document.documentElement.clientHeight;
-
-    const progress =
-    (scrollTop / scrollHeight) * 100;
-
-    progressBar.style.width =
-    progress + "%";
-
-});
-
-/*==================================================
-        BACK TO TOP BUTTON
-==================================================*/
-
-const backToTop =
-document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-
-    if (!backToTop) return;
-
-    if (window.scrollY > 400) {
-
-        backToTop.style.display = "flex";
-
-    } else {
-
-        backToTop.style.display = "none";
-
-    }
-
-});
-
-if(backToTop){
-
-backToTop.addEventListener("click", () => {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
+        counterObserver.unobserve(counter);
 
     });
 
 });
+
+counters.forEach(counter => {
+
+    counterObserver.observe(counter);
+
+});
+
+/*==================================================
+    CURSOR GLOW
+==================================================*/
+
+const cursorGlow = document.getElementById("cursor-glow");
+
+if (cursorGlow) {
+
+    document.addEventListener("mousemove", (e) => {
+
+        cursorGlow.style.left = e.clientX + "px";
+        cursorGlow.style.top = e.clientY + "px";
+
+    });
 
 }
 
 /*==================================================
-        SMOOTH SCROLL
+    HERO IMAGE PARALLAX
 ==================================================*/
 
-document.querySelectorAll('a[href^="#"]')
-.forEach(anchor => {
+const heroImage = document.querySelector(".hero-image");
 
-    anchor.addEventListener("click", function (e) {
+if (heroImage) {
 
-        const target =
-        document.querySelector(
-            this.getAttribute("href")
-        );
+    document.addEventListener("mousemove", (e) => {
 
-        if (!target) return;
+        const x = (window.innerWidth / 2 - e.clientX) / 40;
+        const y = (window.innerHeight / 2 - e.clientY) / 40;
 
-        e.preventDefault();
-
-        target.scrollIntoView({
-
-            behavior: "smooth",
-
-            block: "start"
-
-        });
+        heroImage.style.transform =
+            `translate(${x}px, ${y}px)`;
 
     });
 
-});
+}
 
 /*==================================================
-        ACTIVE NAVIGATION
+    BUTTON RIPPLE EFFECT
 ==================================================*/
 
-const sections =
-document.querySelectorAll("section");
-
-const navItems =
-document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const top =
-        section.offsetTop - 180;
-
-        if (window.scrollY >= top) {
-
-            current =
-            section.getAttribute("id");
-
-        }
-
-    });
-
-    navItems.forEach(link => {
-
-        link.classList.remove("active");
-
-        if (
-
-            link.getAttribute("href") ===
-            "#" + current
-
-        ) {
-
-            link.classList.add("active");
-
-        }
-
-    });
-
-});
-/*==================================================
-        BUTTON RIPPLE EFFECT
-==================================================*/
-
-const buttons = document.querySelectorAll(".btn");
-
-buttons.forEach((button) => {
+document.querySelectorAll(".btn").forEach(button => {
 
     button.addEventListener("click", function (e) {
 
-        const oldRipple =
-        this.querySelector(".ripple");
-
-        if (oldRipple) {
-
-            oldRipple.remove();
-
-        }
-
-        const ripple =
-        document.createElement("span");
+        const ripple = document.createElement("span");
 
         ripple.classList.add("ripple");
 
-        const size = Math.max(
-
-            this.clientWidth,
-
-            this.clientHeight
-
-        );
+        const size = Math.max(this.clientWidth, this.clientHeight);
 
         ripple.style.width = size + "px";
         ripple.style.height = size + "px";
 
-        ripple.style.left =
-        (e.offsetX - size / 2) + "px";
-
-        ripple.style.top =
-        (e.offsetY - size / 2) + "px";
+        ripple.style.left = (e.offsetX - size / 2) + "px";
+        ripple.style.top = (e.offsetY - size / 2) + "px";
 
         this.appendChild(ripple);
 
@@ -604,133 +514,41 @@ buttons.forEach((button) => {
 });
 
 /*==================================================
-        CONTACT FORM MESSAGE
+    CONTACT FORM
 ==================================================*/
 
-const contactForm =
-document.querySelector(".contact-form");
+const contactForm = document.querySelector(".contact-form");
 
-if(contactForm){
+if (contactForm) {
 
-contactForm.addEventListener("submit",function(){
+    contactForm.addEventListener("submit", function (e) {
 
-setTimeout(()=>{
+        e.preventDefault();
 
-alert(
+        alert("✅ Thank you! Your message has been received.");
 
-"✅ Thank you for contacting me!\n\nI'll get back to you soon."
+        contactForm.reset();
 
-);
-
-},300);
-
-});
+    });
 
 }
 
 /*==================================================
-        IMAGE FADE IN
+    DISABLE IMAGE DRAG
 ==================================================*/
 
-const images =
-document.querySelectorAll("img");
+document.querySelectorAll("img").forEach((img) => {
 
-const imageObserver =
-new IntersectionObserver((entries)=>{
-
-entries.forEach((entry)=>{
-
-if(entry.isIntersecting){
-
-entry.target.style.opacity="1";
-
-entry.target.style.transform="scale(1)";
-
-imageObserver.unobserve(entry.target);
-
-}
-
-});
-
-});
-
-images.forEach((img)=>{
-
-img.style.opacity="0";
-
-img.style.transform="scale(.95)";
-
-img.style.transition="all .8s ease";
-
-imageObserver.observe(img);
+    img.setAttribute("draggable", "false");
 
 });
 
 /*==================================================
-        RESIZE OPTIMIZATION
+    PAGE READY
 ==================================================*/
 
-let resizeTimer;
+window.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener("resize",()=>{
-
-clearTimeout(resizeTimer);
-
-resizeTimer=setTimeout(()=>{
-
-console.log("Layout Updated");
-
-},250);
+    console.log("🚀 Portfolio Loaded Successfully");
 
 });
-
-/*==================================================
-        DISABLE IMAGE DRAG
-==================================================*/
-
-document.querySelectorAll("img")
-.forEach((img)=>{
-
-img.setAttribute("draggable","false");
-
-});
-
-/*==================================================
-        DISABLE RIGHT CLICK
-==================================================*/
-
-document.addEventListener("contextmenu",(e)=>{
-
-e.preventDefault();
-
-});
-
-/*==================================================
-        PAGE READY
-==================================================*/
-
-window.addEventListener("load",()=>{
-
-document.body.classList.add("loaded");
-
-});
-
-/*==================================================
-        FINISHED
-==================================================*/
-
-console.log(
-
-"%c🚀 Portfolio Loaded Successfully",
-
-"color:#3B82F6;font-size:18px;font-weight:bold;"
-
-);
-
-console.log(
-
-"%cDesigned & Developed by Manchala Madhan",
-
-"color:#8B5CF6;font-size:14px;"
-
-);
