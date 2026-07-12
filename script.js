@@ -521,13 +521,9 @@ const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
 
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener("submit", () => {
 
-        e.preventDefault();
-
-        alert("✅ Thank you! Your message has been received.");
-
-        contactForm.reset();
+        console.log("Submitting to Netlify...");
 
     });
 
