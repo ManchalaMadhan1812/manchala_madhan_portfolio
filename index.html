@@ -1124,33 +1124,33 @@ class="scroll-down">
 
             </div>
 
-            <form class="contact-form">
+            <form
+  name="contact"
+  method="POST"
+  action="/thank-you.html"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  class="contact-form">
 
-                <input type="text"
-                       placeholder="Your Name"
-                       required>
+  <input type="hidden" name="form-name" value="contact">
 
-                <input type="email"
-                       placeholder="Your Email"
-                       required>
+  <p hidden>
+    <input name="bot-field">
+  </p>
 
-                <input type="text"
-                       placeholder="Subject"
-                       required>
+  <input type="text" name="name" placeholder="Your Name" required>
 
-                <textarea
-                    placeholder="Write your message..."
-                    required></textarea>
+  <input type="email" name="email" placeholder="Your Email" required>
 
-                <button
-                    type="submit"
-                    class="btn primary-btn">
+  <input type="text" name="subject" placeholder="Subject" required>
 
-                    Send Message
+  <textarea name="message" placeholder="Your Message" required></textarea>
 
-                </button>
+  <button type="submit" class="btn primary-btn">
+    Send Message
+  </button>
 
-            </form>
+</form>
 
         </div>
 
