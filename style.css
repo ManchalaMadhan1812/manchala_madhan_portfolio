@@ -1448,13 +1448,17 @@ background:#3B82F6;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+grid-template-columns:repeat(2,1fr);
 
 gap:35px;
 
 }
 
 .certificate-card{
+
+flex:0 0 calc((100% - 35px) / 2);
+
+scroll-snap-align:start;
 
 overflow:hidden;
 
@@ -1488,11 +1492,15 @@ overflow:hidden;
 
 .certificate-image img{
 
-width:100%;
+width:auto;
 
 height:100%;
 
-object-fit:cover;
+min-width:100%;
+
+max-width:none;
+
+object-fit:contain;
 
 transition:.4s;
 
@@ -1528,9 +1536,29 @@ gap:10px;
 
 position:relative;
 
-overflow:hidden;
+overflow-x:auto;
+
+overflow-y:hidden;
+
+scrollbar-width:thin;
+
+scrollbar-color:#3B82F6 rgba(255,255,255,.08);
 
 color:white;
+
+}
+
+.certificate-preview::-webkit-scrollbar{
+
+height:7px;
+
+}
+
+.certificate-preview::-webkit-scrollbar-thumb{
+
+background:#3B82F6;
+
+border-radius:10px;
 
 }
 
@@ -1548,11 +1576,13 @@ transition:transform .45s ease;
 
 transform-origin:center;
 
+cursor:zoom-in;
+
 }
 
 .certificate-preview:hover img{
 
-transform:scale(1.12);
+transform:scale(1.3);
 
 }
 
@@ -2372,6 +2402,12 @@ flex-direction:column;
 .projects-grid{
 
 grid-template-columns:1fr;
+
+}
+
+.certificate-card{
+
+flex-basis:100%;
 
 }
 
