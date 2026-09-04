@@ -1534,23 +1534,25 @@ color:white;
 
 }
 
-.certificate-preview::before{
+.certificate-preview img{
 
-content:"CERTIFICATE";
+width:100%;
 
-position:absolute;
+height:100%;
 
-top:22px;
+object-fit:contain;
 
-left:24px;
+background:#F8FAFC;
 
-font-size:11px;
+transition:transform .45s ease;
 
-font-weight:600;
+transform-origin:center;
 
-letter-spacing:3px;
+}
 
-opacity:.65;
+.certificate-preview:hover img{
+
+transform:scale(1.12);
 
 }
 
@@ -1589,12 +1591,6 @@ letter-spacing:2px;
 font-size:14px;
 
 color:#CFFAFE;
-
-}
-
-.certificate-card:hover img{
-
-transform:scale(1.05);
 
 }
 
